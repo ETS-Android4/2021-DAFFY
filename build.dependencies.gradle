@@ -5,9 +5,11 @@ repositories {
     flatDir {
         dirs rootProject.file('libs')
     }
+    maven { url = 'https://maven.brott.dev/' }
 }
 
 dependencies {
+    implementation 'com.acmerobotics.dashboard:dashboard:0.4.3'
     implementation 'org.firstinspires.ftc:Inspection:7.1.0'
     implementation 'org.firstinspires.ftc:Blocks:7.1.0'
     implementation 'org.firstinspires.ftc:Tfod:7.1.0'
