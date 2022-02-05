@@ -1,9 +1,8 @@
 package org.firstinspires.ftc.teamcode.attachment;
 
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.opmode.AttachableOpmode;
 
 public interface IAttachment {
-    void initialize(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2);
+    void initialize(AttachableOpmode opmode);
     void update(long dt);
 }

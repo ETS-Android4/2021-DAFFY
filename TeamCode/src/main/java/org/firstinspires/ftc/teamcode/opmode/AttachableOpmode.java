@@ -1,23 +1,29 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.attachment.IAttachment;
 
 import java.util.HashSet;
 
-public abstract class BaseOpmode extends OpMode {
+public abstract class AttachableOpmode extends OpMode {
     private HashSet<IAttachment> attachments;
     private long lastUpdate;
+
+    protected FtcDashboard dashboard;
 
     public void addAttachment(IAttachment attachment) {
         attachments.add(attachment);
     }
 
     protected void initializeAttachments() {
+        System.out.println("initializing attachments");
         for (IAttachment attachment : attachments) {
-            attachment.initialize(hardwareMap, gamepad1, gamepad2);
+            System.out.println("Initializing attachment " + attachment.getClass().getName());
+            attachment.initialize(this);
         }
     }
 
@@ -28,8 +34,12 @@ public abstract class BaseOpmode extends OpMode {
     }
 
     public final void init() {
+        attachments = new HashSet<>();
+        dashboard = FtcDashboard.getInstance();
+        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
+
+        init(0); // Call subclass init
         initializeAttachments();
-        init(0);
     }
 
     public final void loop() {

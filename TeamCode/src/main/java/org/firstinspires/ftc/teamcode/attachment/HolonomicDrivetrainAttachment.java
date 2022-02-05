@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.firstinspires.ftc.teamcode.opmode.AttachableOpmode;
 
-public class HolonomicDrivetrain implements IAttachment {
+public class HolonomicDrivetrainAttachment implements IAttachment {
     //private double exponent;
     private static final RealMatrix INVERSEMATRIX = MatrixUtils.createRealMatrix(new double[][] {
             {1,  1, -1}, // FL
@@ -20,18 +21,18 @@ public class HolonomicDrivetrain implements IAttachment {
     private DcMotor FL;
     private DcMotor RL;
     private DcMotor RR;
-    private Gamepad gamepad1;
+    private AttachableOpmode opmode;
 
-    public HolonomicDrivetrain() {}
+    public HolonomicDrivetrainAttachment() {}
 
     @Override
-    public void initialize(HardwareMap hwmap, Gamepad gamepad1, Gamepad gamepad2) {
-        this.gamepad1 = gamepad1;
+    public void initialize(AttachableOpmode opmode) {
+        this.opmode = opmode;
 
-        FR = hwmap.get(DcMotor.class, "FR");
-        FL = hwmap.get(DcMotor.class, "FL");
-        RR = hwmap.get(DcMotor.class, "RR");
-        RL = hwmap.get(DcMotor.class, "RL");
+        FR = opmode.hardwareMap.get(DcMotor.class, "FR");
+        FL = opmode.hardwareMap.get(DcMotor.class, "FL");
+        RR = opmode.hardwareMap.get(DcMotor.class, "RR");
+        RL = opmode.hardwareMap.get(DcMotor.class, "RL");
 
         FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -52,7 +53,12 @@ public class HolonomicDrivetrain implements IAttachment {
     @Override
     public void update(long dt) {
         //double[] powerArr = INVERSEMATRIX.multiply(MatrixUtils.createColumnRealMatrix(new double[] {gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x})).getColumn(0);
-        double[] powerArr = INVERSEMATRIX.operate(new double[] {gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x});
+        double[] powerArr = INVERSEMATRIX.operate(new double[] {
+            this.opmode.gamepad1.left_stick_y,
+            this.opmode.gamepad1.left_stick_x,
+            this.opmode.gamepad1.right_stick_x
+        });
+
         FL.setPower(powerArr[0]);
         FR.setPower(powerArr[1]);
         RL.setPower(powerArr[2]);
