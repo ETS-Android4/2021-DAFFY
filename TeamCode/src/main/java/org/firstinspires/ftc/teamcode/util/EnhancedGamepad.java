@@ -31,28 +31,28 @@ public class EnhancedGamepad extends Gamepad {
     public float get_left_stick_x() {
         float v = gamepad.left_stick_x;
         v = Range.clip(v, -1, 1); // Clamp
-        v = (float) (Math.signum(v) * Math.pow(v, LeftStickExponent)); // Logarithmic control scale
+        v = (float) (Math.signum(v) * Math.abs(Math.pow(v, LeftStickExponent))); // Logarithmic control scale
         return v;
     }
 
     public float get_left_stick_y() {
         float v = gamepad.left_stick_y;
         v = Range.clip(v, -1, 1); // Clamp
-        v = (float) (Math.signum(v) * Math.pow(v, LeftStickExponent)); // Logarithmic control scale
+        v = (float) (Math.signum(v) * Math.abs(Math.pow(v, LeftStickExponent))); // Logarithmic control scale
         return v;
     }
 
     public float get_right_stick_x() {
         float v = gamepad.right_stick_x;
         v = Range.clip(v, -1, 1); // Clamp
-        v = (float) (Math.signum(v) * Math.pow(v, RightStickExponent)); // Logarithmic control scale
+        v = (float) (Math.signum(v) * Math.abs(Math.pow(v, RightStickExponent))); // Logarithmic control scale
         return v;
     }
 
     public float get_right_stick_y() {
         float v = gamepad.right_stick_y;
         v = Range.clip(v, -1, 1); // Clamp
-        v = (float) (Math.signum(v) * Math.pow(v, RightStickExponent)); // Logarithmic control scale
+        v = (float) (Math.signum(v) * Math.abs(Math.pow(v, RightStickExponent))); // Logarithmic control scale
         return v;
     }
 
