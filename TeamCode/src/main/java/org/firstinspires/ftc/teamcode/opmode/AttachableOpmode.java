@@ -20,10 +20,17 @@ public abstract class AttachableOpmode extends OpMode {
     }
 
     protected void initializeAttachments() {
-        System.out.println("initializing attachments");
         for (IAttachment attachment : attachments) {
-            System.out.println("Initializing attachment " + attachment.getClass().getName());
+            telemetry.log().add("Initializing " + attachment.getClass().getSimpleName());
             attachment.initialize(this);
+            /*try {
+                attachment.initialize(this);
+                telemetry.log().add("Initialized " + attachment.getClass().getSimpleName() + " attachment");
+            } catch (Exception e) {
+                attachments.remove(attachment);
+                telemetry.log().add("FAILED to initialize " + attachment.getClass().getSimpleName());
+                telemetry.log().add(String.valueOf(e));
+            }*/
         }
     }
 

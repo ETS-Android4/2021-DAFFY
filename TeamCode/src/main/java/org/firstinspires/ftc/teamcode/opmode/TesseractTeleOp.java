@@ -1,20 +1,16 @@
 package org.firstinspires.ftc.teamcode.opmode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.attachment.HolonomicDrivetrain;
+import org.firstinspires.ftc.teamcode.attachment.ClawAttachment;
+import org.firstinspires.ftc.teamcode.attachment.HolonomicDrivetrainAttachment;
 
 @TeleOp(name = "TESSRACT")
-public class TesseractTeleOp extends BaseOpmode {
-    private FtcDashboard dashboard;
-
+public class TesseractTeleOp extends AttachableOpmode {
     @Override
     public void init(int err) {
-        telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
-        addAttachment(new HolonomicDrivetrain());
+        addAttachment(new HolonomicDrivetrainAttachment());
+        addAttachment(new ClawAttachment());
     }
 
     @Override
